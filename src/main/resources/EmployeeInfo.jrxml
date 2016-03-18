@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EmployeeInfo" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fbc4d9af-eca8-49f4-ab74-04bbc95ef66e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="RPT_SAL" class="java.lang.String"/>
+	<parameter name="RPT_HIREDATE" class="java.lang.String"/>
+	<parameter name="RPT_ORDER_COLUMN" class="java.lang.String"/>
+	<parameter name="name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select empno, ename, job, mgr, hiredate, sal, comm, deptno
+  from emp t
+ where sal > $P{RPT_SAL}
+   and hiredate > to_date($P{RPT_HIREDATE}, 'yyyy-mm-dd')
+ order by $P!{RPT_ORDER_COLUMN}]]>
+	</queryString>
+	<field name="EMPNO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="JOB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MGR" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HIREDATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SAL" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMM" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DEPTNO" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="SAL_SUM" class="java.lang.Long" incrementType="Report">
+		<variableExpression><![CDATA[new java.lang.Long($V{SAL_SUM}.longValue() + $F{SAL}.longValue())]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.lang.Long(0)]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="304" y="30" width="172" height="22" uuid="505b7603-2751-48be-8268-bd357655d677"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[员工信息报表]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="0" width="171" height="30" uuid="af924ed1-38fe-4dea-bca4-14443c313869"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[XXXXX公司]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="0" width="59" height="20" uuid="f719885a-8b80-4053-9b55-2733c24df79d"/>
+				<textElement>
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="64" y="0" width="114" height="20" uuid="2fdc205a-c573-481b-bc69-ddb19340944d"/>
+				<textElement>
+					<font size="12" pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="663" y="0" width="80" height="20" uuid="61052de6-0525-4f4c-8336-7729ee2fab46"/>
+				<textElement textAlignment="Right">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="743" y="0" width="40" height="20" uuid="d51acfe7-2062-4c2c-9538-72a9336952bb"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement x="5" y="4" width="779" height="1" uuid="fd057bf4-e2c8-4fd1-8392-fb5822909737"/>
+			</line>
+			<line>
+				<reportElement x="5" y="33" width="779" height="1" uuid="254590b9-214a-4786-aab9-eedd2230d69b"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="9" width="100" height="20" uuid="8c58a6c3-4067-4cb9-8743-0499fc04367c"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[员工编号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="9" width="100" height="20" uuid="d115e2b8-a87a-4274-aa1b-83a7876cf183"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[员工姓名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="9" width="100" height="20" uuid="2416bf6f-e1ef-420c-903e-21edc6ae1b91"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[岗位]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="9" width="100" height="20" uuid="1d108fab-9475-4213-b6fb-04a93584b917"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[上级]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="9" width="100" height="20" uuid="abeba960-fdbe-4d88-b357-3d14b0eb2e2a"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[入职日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="9" width="79" height="20" uuid="c27a2a08-d5aa-4080-9f16-8dc0f17ce8ea"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[薪水]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="584" y="9" width="100" height="20" uuid="afec6a3c-9bd8-431b-b2ad-43ff826fce06"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[comm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="684" y="9" width="100" height="20" uuid="a2d2d448-741a-40ae-b798-477e553fb1f7"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[部门编号]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="3" width="100" height="20" uuid="d71c7104-c339-4043-88ba-0562c8b0c79e"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPNO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="6" y="29" width="777" height="1" uuid="32c471a5-c687-4052-a992-f678fbaf8aee"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="3" width="100" height="20" uuid="a376bc39-5017-40ad-b938-205ac6272524"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="205" y="3" width="100" height="20" uuid="9715de75-2793-4a62-a7c9-f2e076e34f4f"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="305" y="3" width="100" height="20" uuid="0e628856-00db-4f68-8e33-03f0e4904079"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MGR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="405" y="3" width="100" height="20" uuid="23a6dee1-41ae-47fc-811f-d8da49a6cb7a"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HIREDATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,##0" isBlankWhenNull="true">
+				<reportElement x="505" y="3" width="79" height="20" uuid="1c4e3a66-5e9f-474a-b970-f88c4e992179"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="584" y="3" width="100" height="20" uuid="9f11ae9e-4521-4e2f-99b4-30cfa89a0f95"/>
+				<textFieldExpression><![CDATA[$F{COMM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="684" y="3" width="100" height="20" uuid="ff417845-4252-40fd-9428-3cfc4a7c6e66"/>
+				<textFieldExpression><![CDATA[$F{DEPTNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="1" width="59" height="20" uuid="e8b37f3a-9ce6-4a0f-a814-e06e36f481a4"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[报表编号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="64" y="1" width="57" height="20" uuid="5de47974-9f1a-4e5e-9cff-29221ab501ec"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[RPT001]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="627" y="1" width="59" height="20" uuid="4eea5a1d-71a3-4510-93a3-ea7934265245"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[用户]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="686" y="1" width="97" height="20" uuid="922ca258-dbbe-45e8-8f4d-16b8fa4bbb32"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[张三]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="627" y="21" width="59" height="20" uuid="516488bf-5b0e-40e9-8852-4cb033d7839f"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[列印日期]]></text>
+			</staticText>
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="686" y="21" width="97" height="20" uuid="ccbc26d5-319b-4039-bb64-8f4feaa5fb25"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="405" y="0" width="100" height="20" uuid="b432a586-8be5-4d6c-9998-2afe952949ba"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[总计：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="663" y="25" width="100" height="20" uuid="c565e058-feb8-418f-8bff-d52c72328ef4"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[签字：xxx]]></text>
+			</staticText>
+			<textField pattern="###,###,###,##0" isBlankWhenNull="true">
+				<reportElement x="505" y="0" width="104" height="20" uuid="fa412f78-f6c1-4428-95de-8b7d5b1a5578"/>
+				<textFieldExpression><![CDATA[$V{SAL_SUM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
